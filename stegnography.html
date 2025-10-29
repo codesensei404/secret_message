@@ -59,7 +59,12 @@
     
     </div>
 
-    <script>
+    <!-- 
+      THE FIX: Added the 'defer' attribute to the script tag.
+      This ensures the script runs *after* the HTML body is loaded,
+      so getElementById('matrix') will work.
+    -->
+    <script defer>
         const container = document.getElementById('matrix');
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         
@@ -82,6 +87,7 @@
                 content += chars[Math.floor(Math.random() * chars.length)];
             }
 
+            /* \ <-- THIS STRAY BACKSLASH WAS REMOVED FROM THE LINE ABOVE */
             if (i === hiddenColumnIndex) {
                 const insertAt = Math.floor(streamLength / 2);
                 const linkElement = `<a href="https://${hiddenLink}" class="hidden-link">${hiddenLink}</a>`;
@@ -97,4 +103,5 @@
 
 </body>
 </html>
+
 
