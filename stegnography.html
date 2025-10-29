@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Stream</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0F0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+            font-size: 16px;
+            user-select: none;
+        }
+        .matrix-container {
+            display: flex;
+            justify-content: space-around;
+        }
+        .column {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            white-space: nowrap;
+            animation: fall linear infinite;
+            opacity: 0;
+        }
+        
+        
+        .hidden-link {
+            color: #0F0; 
+            text-decoration: none; 
+            opacity: 0.9; 
+            font-weight: bold;
+            
+            transform: rotate(180deg);
+        }
+
+        @keyframes fall {
+            0% { 
+                transform: translateY(-100vh); 
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh); 
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="matrix-container" id="matrix">
+    
+    </div>
+
+    <script>
+        const container = document.getElementById('matrix');
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        
+        /* My Link */
+        const hiddenLink = 'codesensei404.github.io/secret_message/index';
+        
+        const columns = Math.floor(window.innerWidth / 20);
+
+        
+        const hiddenColumnIndex = Math.floor(columns * 0.3) + Math.floor(Math.random() * (columns * 0.4));
+
+        for (let i = 0; i < columns; i++) {
+            const column = document.createElement('div');
+            column.classList.add('column');
+            let content = '';
+            
+            const streamLength = Math.floor(Math.random() * 50) + 20; 
+            
+            for (let j = 0; j < streamLength; j++) {
+                content += chars[Math.floor(Math.random() * chars.length)];
+            }
+
+            \
+            if (i === hiddenColumnIndex) {
+                const insertAt = Math.floor(streamLength / 2);
+                const linkElement = `<a href="https://${hiddenLink}" class="hidden-link">${hiddenLink}</a>`;
+                content = content.substring(0, insertAt) + linkElement + content.substring(insertAt);
+            }
+            
+            column.innerHTML = content;
+            column.style.animationDuration = `${Math.random() * 10 + 5}s`;
+            column.style.animationDelay = `${Math.random() * 10}s`; 
+            container.appendChild(column);
+        }
+    </script>
+
+</body>
+</html>
